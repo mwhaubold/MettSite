@@ -1,0 +1,66 @@
+﻿@model MettSite.Models.MettOrder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MettOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MettAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MettAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TartarAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TartarAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToothpickAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToothpickAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeerAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SurpriseBeverageAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SurpriseBeverageAmount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Customer }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

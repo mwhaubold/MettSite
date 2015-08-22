@@ -50,6 +50,5 @@ D:\Repositories\MettSite\MettSite\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Repositories\MettSite\MettSite\bin\Microsoft.Owin.Security.Google.xml
 D:\Repositories\MettSite\MettSite\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Repositories\MettSite\MettSite\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.csprojResolveAssemblyReference.cache
 D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.dll
 D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.pdb
