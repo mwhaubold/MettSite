@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>MettSite</h1>
+    <p class="lead">MettMyDay ermöglicht dir einfaches und schnelles Bestellen deines Mettbrötchens.</p>
+    <p><a href="@ViewBag.Host@Url.Action("Contact", "Home")" class="btn btn-primary btn-lg">Order here &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Frisches Mett</h2>
+        <p>
+            <img src="~/pics/mett.jpg" alt="Mett" width="300" />
+        </p>
+        <p><a class="btn btn-default" href="https://de.wikipedia.org/wiki/Mett" target="_blank">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Köstliches Tartar</h2>
+        <p>
+            <img src="~/pics/tartar.jpg" alt="Tartar" width="300" />
+        </p>
+        <p><a class="btn btn-default" href="https://de.wikipedia.org/wiki/Tatar" target="_blank">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Erfrischende Getränke</h2>
+        <p>
+            <img src="~/pics/softDrinks.jpg" alt="drinks" width="300" />
+        </p>
+        <p><a class="btn btn-default" href="http://www.getraenke-altinger.de" target="_blank">Learn more &raquo;</a></p>
+    </div>
+</div>
