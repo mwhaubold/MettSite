@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MettSite.Models.MettOrder>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MettBunNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TartarBunNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeverageNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MettOrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MettShop.ChangeDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MettBunNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TartarBunNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeverageNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MettOrderDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

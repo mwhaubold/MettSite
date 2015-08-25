@@ -12,7 +12,6 @@ namespace MettSite.Models
         public int ID { get; set; }
 
         [ForeignKey("Customer")]
-        [Display(Name = "Besteller")]
         public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
 
@@ -31,7 +30,6 @@ namespace MettSite.Models
         public DateTime MettOrderDate { get; set; }
 
         [ForeignKey("MettShop")]
-        [Display(Name = "MettShopID")]
         public int MettShopID { get; set; }
         public virtual MettShop MettShop { get; set; }
     }

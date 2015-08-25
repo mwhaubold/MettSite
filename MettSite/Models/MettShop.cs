@@ -19,7 +19,7 @@ namespace MettSite.Models
 
         public double BeveragePrice { get; set; }
 
-        [Display(Name = "Erstellungsdatum")]
+        [Display(Name = "Mettshop Änderungsdatum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ChangeDate { get; set; }

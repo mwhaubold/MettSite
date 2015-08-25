@@ -1,0 +1,72 @@
+﻿@model MettSite.Models.MettOrder
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MettOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MettShop.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MettShop.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MettBunNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MettBunNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TartarBunNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TartarBunNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeverageNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeverageNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MettOrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MettOrderDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
