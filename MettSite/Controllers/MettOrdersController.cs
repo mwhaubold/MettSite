@@ -50,11 +50,17 @@ namespace MettSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CustomerID,MettBunNumber,TartarBunNumber,BeverageNumber,MettOrderDate,MettShopID")] MettOrder mettOrder)
+        public ActionResult Create([Bind(Include = "ID,CustomerID,MettBunNumber,TartarBunNumber,BeverageNumber")] MettOrder mettOrder)
         {
             if (ModelState.IsValid)
             {
+                mettOrder.MettOrderDate = DateTime.Today;
+
+                int latestMettShop = db.MettShops.Max(p => p.ID);
+                mettOrder.MettShopID = latestMettShop;
+
                 db.MettOrders.Add(mettOrder);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -82,29 +88,45 @@ namespace MettSite.Controllers
         }
 
         // POST: MettOrders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CustomerID,MettBunNumber,TartarBunNumber,BeverageNumber,MettOrderDate,MettShopID")] MettOrder mettOrder)
+        public ActionResult EditPost(int? ID)
         {
-            if (ModelState.IsValid)
+            if (ID == null)
             {
-                db.Entry(mettOrder).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.CustomerID = new SelectList(db.Customers, "ID", "Name", mettOrder.CustomerID);
-            ViewBag.MettShopID = new SelectList(db.MettShops, "ID", "ID", mettOrder.MettShopID);
-            return View(mettOrder);
+
+            MettOrder mettOrderToUpdate = db.MettOrders.Find(ID);
+
+            if (mettOrderToUpdate.MettOrderDate == DateTime.Today)
+            {
+                if (TryUpdateModel(mettOrderToUpdate, "", new string[] {"MettBunNumber", "TartarBunNumber", "BeverageNumber"}))
+                {
+                    try
+                    {
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    catch (DataException)
+                    {
+                        ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    }
+                }
+            }
+            return View(mettOrderToUpdate);
         }
 
         // GET: MettOrders/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError=false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists, see your system administrator.";
             }
             MettOrder mettOrder = db.MettOrders.Find(id);
             if (mettOrder == null)
@@ -115,13 +137,21 @@ namespace MettSite.Controllers
         }
 
         // POST: MettOrders/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            MettOrder mettOrder = db.MettOrders.Find(id);
-            db.MettOrders.Remove(mettOrder);
-            db.SaveChanges();
+            try
+            {
+                MettOrder mettorder = db.MettOrders.Find(id);
+                db.MettOrders.Remove(mettorder);
+                db.SaveChanges();
+            }
+            catch (DataException)
+            {
+
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 

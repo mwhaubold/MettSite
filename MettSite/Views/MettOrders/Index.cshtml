@@ -32,32 +32,64 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MettBunNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TartarBunNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BeverageNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MettOrderDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        if (item.MettOrderDate == DateTime.Today)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettBunNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TartarBunNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeverageNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettOrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettBunNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TartarBunNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeverageNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettOrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    }
 
 </table>
+
