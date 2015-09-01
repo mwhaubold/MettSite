@@ -19,14 +19,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MettShop.ID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MettShop.ID)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.MettBunNumber)
         </dt>
 
@@ -60,7 +52,16 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (Model.MettOrderDate == DateTime.Today)
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
