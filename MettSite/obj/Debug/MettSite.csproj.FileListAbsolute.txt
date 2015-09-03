@@ -53,3 +53,7 @@ D:\Repositories\MettSite\MettSite\bin\Microsoft.Owin.Security.MicrosoftAccount.x
 D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.csprojResolveAssemblyReference.cache
 D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.dll
 D:\Repositories\MettSite\MettSite\obj\Debug\MettSite.pdb
+D:\Repositories\MettSite\MettSite\bin\PagedList.dll
+D:\Repositories\MettSite\MettSite\bin\PagedList.Mvc.dll
+D:\Repositories\MettSite\MettSite\bin\PagedList.xml
+D:\Repositories\MettSite\MettSite\bin\PagedList.Mvc.xml

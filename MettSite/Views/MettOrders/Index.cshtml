@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MettSite.Models.MettOrder>
+﻿@model PagedList.IPagedList<MettSite.Models.MettOrder>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -9,25 +11,34 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "MettOrders", FormMethod.Get))
+{
+    <p>
+        Filterung nach Besteller: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.Name)
+            @Html.ActionLink("Besteller", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MettBunNumber)
+            Anzahl Mettbrötchen
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TartarBunNumber)
+            Anzahl Tartarbrötchen
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BeverageNumber)
+            Anzahl Getränke
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MettOrderDate)
+            @Html.ActionLink("Bestelldatum", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MettShop.ChangeDate)
+            Änderungsdatum Mettshop
         </th>
         <th></th>
     </tr>
@@ -92,4 +103,9 @@
     }
 
 </table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MettSite.DataLayer;
 using MettSite.Models;
+using PagedList;
 
 namespace MettSite.Controllers
 {
@@ -16,10 +17,50 @@ namespace MettSite.Controllers
         private DataContext db = new DataContext();
 
         // GET: MettOrders
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var mettOrders = db.MettOrders.Include(m => m.Customer).Include(m => m.MettShop);
-            return View(mettOrders.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "Date" : "";
+            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var mettOrders = from s in db.MettOrders select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                mettOrders = mettOrders.Where(s => s.Customer.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    mettOrders = mettOrders.OrderByDescending(s => s.Customer.Name);
+                    break;
+                case "Name":
+                    mettOrders = mettOrders.OrderBy(s => s.Customer.Name);
+                    break;
+                case "Date":
+                    mettOrders = mettOrders.OrderBy(s => s.MettOrderDate);
+                    break;
+                default:
+                    mettOrders = mettOrders.OrderByDescending(s => s.MettOrderDate);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(mettOrders.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: MettOrders/Details/5
@@ -54,6 +95,15 @@ namespace MettSite.Controllers
         {
             if (ModelState.IsValid)
             {
+                var result = from s in db.MettOrders where s.MettOrderDate == DateTime.Today && s.CustomerID == mettOrder.CustomerID select s;
+                int anzEntries = result.Count();
+                if (anzEntries > 0)
+                {
+                    ViewBag.CustomerID = new SelectList(db.Customers, "ID", "Name", mettOrder.CustomerID);
+                    ViewBag.MettShopID = new SelectList(db.MettShops, "ID", "ID", mettOrder.MettShopID);
+                    return View(mettOrder);
+                }
+
                 mettOrder.MettOrderDate = DateTime.Today;
 
                 int latestMettShop = db.MettShops.Max(p => p.ID);
