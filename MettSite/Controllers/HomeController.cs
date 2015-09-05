@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MettSite.DataLayer;
+using MettSite.ViewModels;
 
 namespace MettSite.Controllers
 {
+
     public class HomeController : Controller
     {
+        private DataContext db = new DataContext();
+
         public ActionResult Index()
         {
             return View();
@@ -15,9 +20,16 @@ namespace MettSite.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            IQueryable<MettStatistics> data = from mettorder in db.MettOrders
+                                              group mettorder by mettorder.Customer.Name into ordergroup
+                                              select new MettStatistics()
+                                              {
+                                                  CustomerName = ordergroup.Key,
+                                                  MettCount = ordergroup.Sum(c => c.MettBunNumber),
+                                                  TartarCount = ordergroup.Sum(c => c.TartarBunNumber),
+                                                  BeverageCount = ordergroup.Sum(c => c.BeverageNumber)
+                                              };
+            return View(data.ToList());
         }
 
         public ActionResult Contact()
@@ -25,6 +37,12 @@ namespace MettSite.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

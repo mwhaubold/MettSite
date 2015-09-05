@@ -1,7 +1,42 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model IEnumerable<MettSite.ViewModels.MettStatistics>
 
-<p>Use this area to provide additional information.</p>
+@{
+    ViewBag.Title = "Bestellstatistik";
+}
+
+<h2>Bestellstatistik</h2>
+
+<table>
+    <tr>
+        <th>
+            Besteller
+        </th>
+        <th>
+            Anzahl Mettbrötchen
+        </th>
+        <th>
+            Anzahl Tartarbrtöchen
+        </th>
+        <th>
+            Anzahl Getränke
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @item.MettCount
+            </td>
+            <td>
+                @item.TartarCount
+            </td>
+            <td>
+                @item.BeverageCount
+            </td>
+        </tr>
+    }
+</table>
