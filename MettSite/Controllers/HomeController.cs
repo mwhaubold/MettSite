@@ -25,10 +25,11 @@ namespace MettSite.Controllers
                                               select new MettStatistics()
                                               {
                                                   CustomerName = ordergroup.Key,
-                                                  MettCount = ordergroup.Sum(c => c.MettBunNumber),
-                                                  TartarCount = ordergroup.Sum(c => c.TartarBunNumber),
+                                                  MettWeight = ordergroup.Sum(c => (c.MettBunNumber * c.MettShop.MettAmount)/1000),
+                                                  TartarWeight = ordergroup.Sum(c => (c.TartarBunNumber * c.MettShop.TartarAmount)/1000),
                                                   BeverageCount = ordergroup.Sum(c => c.BeverageNumber)
                                               };
+
             return View(data.ToList());
         }
 

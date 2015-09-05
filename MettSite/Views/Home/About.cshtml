@@ -7,15 +7,21 @@
 <h2>Bestellstatistik</h2>
 
 <table>
+    <colgroup>
+        <col width="120" />
+        <col width="220" />
+        <col width="220" />
+        <col width="220" />
+    </colgroup>
     <tr>
         <th>
             Besteller
         </th>
         <th>
-            Anzahl Mettbrötchen
+            verspeistes Mett in kg
         </th>
         <th>
-            Anzahl Tartarbrtöchen
+            verspeistes Tartar in kg
         </th>
         <th>
             Anzahl Getränke
@@ -29,10 +35,10 @@
                 @Html.DisplayFor(modelItem => item.CustomerName)
             </td>
             <td>
-                @item.MettCount
+                @item.MettWeight
             </td>
             <td>
-                @item.TartarCount
+                @item.TartarWeight
             </td>
             <td>
                 @item.BeverageCount

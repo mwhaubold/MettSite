@@ -7,9 +7,9 @@ namespace MettSite.ViewModels
     {
         public string CustomerName { get; set; }
 
-        public int MettCount { get; set; }
+        public double MettWeight { get; set; }
 
-        public int TartarCount { get; set; }
+        public double TartarWeight { get; set; }
 
         public int BeverageCount { get; set; }
     }
