@@ -106,8 +106,14 @@ namespace MettSite.Controllers
 
                 mettOrder.MettOrderDate = DateTime.Today;
 
-                int latestMettShop = db.MettShops.Max(p => p.ID);
-                mettOrder.MettShopID = latestMettShop;
+                int latestMettShopID = db.MettShops.Max(p => p.ID);
+                mettOrder.MettShopID = latestMettShopID;
+
+                MettShop latestMettShop = db.MettShops.Find(latestMettShopID);
+                double charge = (latestMettShop.MettPrice * mettOrder.MettBunNumber) + (latestMettShop.TartarPrice * mettOrder.TartarBunNumber) + (latestMettShop.BeveragePrice * mettOrder.BeverageNumber);
+
+                mettOrder.Charge = charge;
+
 
                 db.MettOrders.Add(mettOrder);
 
@@ -151,8 +157,10 @@ namespace MettSite.Controllers
 
             if (mettOrderToUpdate.MettOrderDate == DateTime.Today)
             {
-                if (TryUpdateModel(mettOrderToUpdate, "", new string[] {"MettBunNumber", "TartarBunNumber", "BeverageNumber"}))
+                if (TryUpdateModel(mettOrderToUpdate, "", new string[] { "MettBunNumber", "TartarBunNumber", "BeverageNumber" }))
                 {
+                    mettOrderToUpdate.Charge = (mettOrderToUpdate.MettShop.MettPrice * mettOrderToUpdate.MettBunNumber) + (mettOrderToUpdate.MettShop.TartarPrice * mettOrderToUpdate.TartarBunNumber) + (mettOrderToUpdate.MettShop.BeveragePrice * mettOrderToUpdate.BeverageNumber);
+
                     try
                     {
                         db.SaveChanges();
@@ -168,7 +176,7 @@ namespace MettSite.Controllers
         }
 
         // GET: MettOrders/Delete/5
-        public ActionResult Delete(int? id, bool? saveChangesError=false)
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
@@ -183,6 +191,10 @@ namespace MettSite.Controllers
             {
                 return HttpNotFound();
             }
+            if (mettOrder.MettOrderDate != DateTime.Today)
+            {
+                return RedirectToAction("Index");
+            }
             return View(mettOrder);
         }
 
@@ -191,10 +203,16 @@ namespace MettSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
+            MettOrder currentOrder = db.MettOrders.Find(id);
+
+            if (currentOrder.MettOrderDate != DateTime.Today)
+            {
+                return RedirectToAction("Index");
+            }
+
             try
             {
-                MettOrder mettorder = db.MettOrders.Find(id);
-                db.MettOrders.Remove(mettorder);
+                db.MettOrders.Remove(currentOrder);
                 db.SaveChanges();
             }
             catch (DataException)

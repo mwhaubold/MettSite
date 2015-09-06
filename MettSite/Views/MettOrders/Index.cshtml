@@ -38,7 +38,7 @@
             @Html.ActionLink("Bestelldatum", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            Änderungsdatum Mettshop
+            EUR
         </th>
         <th></th>
     </tr>
@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.MettOrderDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
+                    @Html.DisplayFor(modelItem => item.Charge)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
@@ -92,11 +92,10 @@
                     @Html.DisplayFor(modelItem => item.MettOrderDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MettShop.ChangeDate)
+                    @Html.DisplayFor(modelItem => item.Charge)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
                 </td>
             </tr>
         }

@@ -24,6 +24,9 @@ namespace MettSite.Models
         [Display(Name = "Anzahl Getränke")]
         public int BeverageNumber { get; set; }
 
+        [Display(Name="EUR")]
+        public double Charge { get; set; }
+
         [Display(Name = "Bestelldatum")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
