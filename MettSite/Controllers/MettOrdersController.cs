@@ -97,7 +97,12 @@ namespace MettSite.Controllers
             {
                 var result = from s in db.MettOrders where s.MettOrderDate == DateTime.Today && s.CustomerID == mettOrder.CustomerID select s;
                 int anzEntries = result.Count();
-                if (anzEntries > 0)
+                if (anzEntries == 1)
+                {
+                    MettOrder foundOrder = result.First();
+                    return RedirectToAction("Edit", new { id = foundOrder.ID });
+                }
+                else if (anzEntries > 0)
                 {
                     ViewBag.CustomerID = new SelectList(db.Customers, "ID", "Name", mettOrder.CustomerID);
                     ViewBag.MettShopID = new SelectList(db.MettShops, "ID", "ID", mettOrder.MettShopID);
